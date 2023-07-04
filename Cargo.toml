@@ -5,4 +5,37 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[lib]
+path = "src/lib.rs"
+
+# Notice the double square brackets: it's an array in TOML's syntax.
+# We can only have one library in a project, but we can have multiple binaries!
+# If you want to manage multiple libraries in the same repository
+# have a look at the workspace feature - we'll cover it later on.
+[[bin]]
+path = "src/main.rs"
+name = "zero2prod"
+
 [dependencies]
+actix-web = "4.3.1"
+chrono = "0.4.26"
+config = "0.13.3"
+serde = { version = "1", features = ["derive"]}
+uuid = { version = "1.4.0", features = ["v4"] }
+
+[dependencies.sqlx]
+version = "0.7.0"
+default-features = false
+features = [
+    "runtime-tokio-rustls",
+    "macros",
+    "postgres",
+    "uuid",
+    "chrono",
+    "migrate"
+]
+
+[dev-dependencies]
+actix-rt = "2.8.0"
+reqwest = "0.11.18"
+tokio = "1.29.1"
